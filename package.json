@@ -1,0 +1,12 @@
+{
+  "name": "score-release-workbench",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "本地谱件采集、齐全性判定与发行版本演示站（仅 Node.js 内置模块）",
+  "scripts": {
+    "start": "node server.js",
+    "demo": "node scripts/demo.mjs",
+    "test": "node --test"
+  }
+}

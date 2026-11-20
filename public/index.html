@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>谱件发行工作台 · 本地演示</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="dot" aria-hidden="true"></span>
+    <div>
+      <h1>谱件发行工作台</h1>
+      <p class="sub">本地虚构数据 · 采集 / 组装 / 展示三段式演示</p>
+    </div>
+  </div>
+  <div class="scene">
+    <span class="pill" id="scene-title">晨雾中的弦乐组曲</span>
+    <span class="pill muted" id="scene-now">—</span>
+  </div>
+</header>
+
+<main>
+  <section class="panel actions-panel">
+    <div class="panel-head">
+      <h2>演示操作</h2>
+      <p>按顺序点击即可复现题述场景；每一步都会改写下面的业务结果区。</p>
+    </div>
+    <div class="actions">
+      <button id="btn-parts" class="primary" type="button">采集未齐谱件</button>
+      <button id="btn-retry" class="primary" type="button">补发总谱并重试</button>
+      <button id="btn-versions" class="ghost" type="button">查看发行版本</button>
+      <span class="divider" aria-hidden="true"></span>
+      <button id="btn-withdraw" class="warn" type="button">撤回总谱</button>
+      <button id="btn-revise-freeze" class="ghost" type="button">修订声部（整套冻结）</button>
+      <button id="btn-revise-ref" class="ghost" type="button">修订声部（按清单引用）</button>
+      <button id="btn-reset" class="ghost danger" type="button">清空台账重来</button>
+    </div>
+    <p class="hint" id="action-hint">当前台账为空。先点「采集未齐谱件」：只送达五个声部，总谱和文件清单缺席。</p>
+  </section>
+
+  <section class="grid">
+    <article class="panel">
+      <div class="panel-head">
+        <h2>采集区</h2>
+        <p>采集进程只按内容留文件，不判断一套是否齐全。</p>
+      </div>
+      <div id="capture-view" class="stack"></div>
+    </article>
+
+    <article class="panel">
+      <div class="panel-head">
+        <h2>组装判定</h2>
+        <p>按清单固定 sha256 逐项校验；任何一项对不上就整批不发行。</p>
+      </div>
+      <div id="assembly-view" class="stack"></div>
+    </article>
+
+    <article class="panel wide">
+      <div class="panel-head">
+        <h2>展示站</h2>
+        <p>只允许切到齐全的一套；作废版本不在展示位，但下载凭证保留。</p>
+      </div>
+      <div id="display-view" class="stack"></div>
+    </article>
+
+    <article class="panel wide" id="versions-panel">
+      <div class="panel-head">
+        <h2>发行版本与下载凭证</h2>
+        <p>版本一经发行即固定，后续修订产生新版本；旧凭证仍可下载其固定内容。</p>
+      </div>
+      <div id="versions-view" class="stack"></div>
+    </article>
+  </section>
+
+  <section class="panel evidence-panel">
+    <div class="panel-head">
+      <h2>业务结果区</h2>
+      <p>每次操作后立即刷新；<code>data-evidence-result="business"</code> 内含可直接核对的计算结果。</p>
+    </div>
+    <div id="evidence" class="evidence" data-evidence-result="business" aria-live="polite">
+      <div class="evidence-line">尚未执行操作。</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>操作日志</h2>
+      <p>只保留本次页面会话内的接口响应摘要。</p>
+    </div>
+    <ol id="log" class="log"></ol>
+  </section>
+</main>
+
+<footer>
+  <p>Node.js 内置模块实现，无第三方依赖。数据写入本地 <code>.data/</code>（JSONL 台账 + SHA-256 内容库）。</p>
+</footer>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>
